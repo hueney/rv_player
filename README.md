@@ -1,2 +1,3 @@
 # rv_player
- radio and video and sponsor app
+ Radio and video and sponsor app.
+ For Community Radio Stations.
