@@ -1,0 +1,20 @@
+Unable to uninstall App on your phone.
+Android studio cant install apk file as old app isnt fully uninstalled:
+So
+1. Open cmd in windows or Terminal in Android Studio
+2. Goto this location in cmd: C:\Users\[user]\AppData\Local\Android\sdk\platform-tools
+3. Type this command: adb uninstall com.example.application.name(Package name)
+4. Proceed if you see command success
+5. Close and reopen your VS window
+6. Run your flutter project again
+
+It Works Example:
+
+Microsoft Windows [Version 10.0.19045.3570]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Ray\AppData\Local\Android\Sdk\platform-tools>
+C:\Users\Ray\AppData\Local\Android\Sdk\platform-tools>adb uninstall com.glanmirecoderdojo.rv_player
+Success
+
+C:\Users\Ray\AppData\Local\Android\Sdk\platform-tools>
