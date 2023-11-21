@@ -75,8 +75,8 @@ flutter:
     - assets/Facebook_Logo_Primary.png
     - assets/Twitter_Logo_White.png
     - assets/Instagram_Glyph_White.png
-    - assets/tv_pause.png
-    - assets/tv_play.png
+    - assets/watch_live_pause.jpg
+    - assets/watch_live.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -14,30 +14,36 @@ class SocialMediaLinksRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         CircularSocialMediaIcon(
+          icon: FontAwesomeIcons.globe, // website icon
+          backgroundColor: Colors.pink, //
+          url: 'https://cr.ie', // Cork Community Radio website
+        ),
+        CircularSocialMediaIcon(
           icon: FontAwesomeIcons.facebook,
           backgroundColor: Colors.blue, // Blue background for Facebook
           url: 'https://www.facebook.com/CorkCityCommunityRadio',
-        ),
-        CircularSocialMediaIcon(
-          icon: FontAwesomeIcons.instagram,
-          backgroundColor: Colors.red, // Red background for Instagram
-          url: 'https://www.instagram.com/corkcitycommunityradio/',
         ),
         CircularSocialMediaIcon(
             icon: FontAwesomeIcons.twitter,
             backgroundColor: Colors.blue, // Blue background for Twitter
             url: 'http://twitter.com/CorkCity_radio' //'https://twitter.com/',
             ),
+        /*
         CircularSocialMediaIcon(
           icon: FontAwesomeIcons.youtube,
           backgroundColor: Colors.red, // Red background for Youtube
           url: 'https://youtube.com/channel/UChxo4t9JesLZKd2tjI_KmJg',
         ),
+         CircularSocialMediaIcon(
+          icon: FontAwesomeIcons.instagram,
+          backgroundColor: Colors.red, // Red background for Instagram
+          url: 'https://www.instagram.com/corkcitycommunityradio/',
+        ),
         CircularSocialMediaIcon(
           icon: FontAwesomeIcons.tiktok,
           backgroundColor: Colors.black, // Black background for TikTok
           url: 'https://www.tiktok.com/@corkcitycommunityradio?_t=8X9fGFmX9Da&_r=1',
-        ),
+        ),*/
       ],
     );
   }
@@ -71,26 +77,14 @@ class CircularSocialMediaIcon extends StatelessWidget {
   // This code Builds the screen
   @override
   Widget build(BuildContext context) {
-    // print("This is url format  $url");
-    // This code adjusts the icon sizes for different screen sizes.
-    // It uses the device screen size from MediaQuery to determine how large the icons should be.
-    double iconSize;
-    double containerSize;
-
-    // Get the screen width of your phone using MediaQuery
+    // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
+    // It gets the device screen size from MediaQuery
     double screenWidth = MediaQuery.of(context).size.width;
-
-    // Define a maximum size for the container and icon .. to remain realistic
-    double maxSize = 50.0; // set a max jic
-
-    // Calculate the size based on screen width, ensuring it doesn't exceed the maximum
-    containerSize = screenWidth / 8; // divide the screen width into 1/8s
-    iconSize = containerSize *
-        0.6; // make icon size a fraction of container size - nice code ChatGPT
-
-    // Apply a maximum size constraint
-    containerSize = containerSize.clamp(0.0, maxSize);
-    iconSize = iconSize.clamp(0.0, maxSize * 0.5);
+    double sizeAdjustFactor = screenWidth;
+    double iconSize = sizeAdjustFactor * 0.6; //60% of container size
+    double maxSize = 200.0; // set a max jic - realistic
+    sizeAdjustFactor = sizeAdjustFactor.clamp(0.0, maxSize); // clamp to maxsize
+    iconSize = iconSize.clamp(0.0, maxSize * 0.5); //clamp to max size
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -104,10 +98,9 @@ class CircularSocialMediaIcon extends StatelessWidget {
           launchUrl(Uri.parse(url)); // ChatGPT suggest parse : works
         },
         child: Container(
-          // width: 60, // Fixed size
-          // height: 60, // Fixed size
-          width: containerSize, // adjusts to screen sizes based on phone screen size
-          height: containerSize, // adjusts to screen sizes
+          width:
+              sizeAdjustFactor / 3, // adjusts to screen sizes based on phone screen size
+          height: sizeAdjustFactor / 7, // adjusts to screen sizes
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: backgroundColor,
@@ -115,7 +108,7 @@ class CircularSocialMediaIcon extends StatelessWidget {
           child: Center(
             child: Icon(
               icon,
-              size: iconSize,
+              size: sizeAdjustFactor / 10,
               color: Colors.white, // icon color
             ),
           ),

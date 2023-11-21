@@ -1,0 +1,13 @@
+Donal Meeting 20/11/2023:
+
+1. When TV is paused auto switch on radio .. logic
+2. If no video use Visibiliy to hide the blank
+3. Show Sponsor at all times
+4. url link on the sponsor image to sponsor website
+5. Change video button to WATCH live
+6. Put on Google Play store and apple app store
+7. Do instruction on mgt of the Sponsor image and url text file
+8. If no sponsor use Visibility = false to hide the display
+9. Ensure the video feed from the studio has audio feed (radio will be paused.0
+10 Put social media buttons at bottom and limit to FB and Twitter and CCC link
+11.. Put code on Github
