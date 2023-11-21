@@ -1,12 +1,12 @@
-/*  main.dart
+/*  main.dart : Radio Video APP for Community Radio stations
  *  Base Code created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
- * Modified by Kids of Coder Dojo Club Glanmire Oct 2023
- * for Cork Community Radio
+ * Modified by the super Kids of Coder Dojo Club Glanmire, Cork, Ireland  Oct 2023
+ * for Cork Community Radio, Ireland
  */
 
 import 'package:flutter/material.dart';
 import 'package:radio_player/radio_player.dart';
-import 'package:rv_player/sponsor_graphic.dart';
+import 'package:rv_player/sponsor.dart';
 import 'package:rv_player/video_player_widget.dart';
 
 import 'social_links.dart';
@@ -47,7 +47,7 @@ class RadioTVAppState extends State<RadioTVApp> {
         radioIsPlaying = value;
       });
     });
-    print("radio IS PLAYING $radioIsPlaying");
+    //print("radio IS PLAYING $radioIsPlaying");
     _radioPlayer.metadataStream.listen((value) {
       setState(() {
         metadata = value;
@@ -58,10 +58,9 @@ class RadioTVAppState extends State<RadioTVApp> {
 // Build Screen here
   @override
   Widget build(BuildContext context) {
-    // Define the custom color using RGB values of radio station website
+    // Define the custom color using RGB values of radio station website brand color
     final customColor1 = Color.fromRGBO(115, 1, 3, 1.0); // CCR red brand color
-    //final customColor2 = Color.fromRGBO(104, 34, 32, 1.0);
-    //
+
     // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery
     double screenWidth = MediaQuery.of(context).size.width;
@@ -84,48 +83,56 @@ class RadioTVAppState extends State<RadioTVApp> {
               ),
               child: Center(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    // Cork Community Radio Brand Circle Image
-                    Container(
-                      height: sizeAdjustFactor, // auto adjusted for diff screen sizes
-                      width: sizeAdjustFactor,
-                      child: ClipRRect(
-                        //  borderRadius: BorderRadius.circular(0.0),
-                        child: Image.asset(
-                          radioStationImagePath,
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        // Cork Community Radio Brand Circle Image
 
-                    //  Listen Live Radio Button
-                    ElevatedButton(
-                      onPressed: () {
-                        // Define the action to be performed when the button is pressed.
-                        // radioIsPlaying boolean value is set to false on initalisation.
-                        radioIsPlaying ? _radioPlayer.pause() : _radioPlayer.play();
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(customColor1),
-                        //  splashFactory: InkSparkle.splashFactory
-                      ),
-                      child:
-                          radioIsPlaying // this is conditional syntax: If true ? Do This : else Do This
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            width: sizeAdjustFactor * 0.8,
+                            height: sizeAdjustFactor *
+                                0.8, // auto adjusted for different screen sizes
+
+                            child: ClipRRect(
+                              child: Image.asset(
+                                radioStationImagePath,
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // Listen Live Radio Button
+                        ElevatedButton(
+                          onPressed: () {
+                            // Define the action to be performed when the button is pressed.
+                            // radioIsPlaying boolean value is set to false on initialization.
+                            radioIsPlaying ? _radioPlayer.pause() : _radioPlayer.play();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(customColor1),
+                          ),
+                          child: radioIsPlaying
                               ? Image.asset(
                                   'assets/listen_live_pause.jpg',
-                                  width: sizeAdjustFactor * 1.25, // scale width as needed
-                                  height: sizeAdjustFactor / 3.5, // 80,
+                                  width: sizeAdjustFactor * 0.6,
+                                  height: sizeAdjustFactor / 3,
                                   fit: BoxFit.scaleDown,
                                 )
                               : Image.asset(
                                   'assets/listen_live.jpg',
-                                  width: sizeAdjustFactor * 1.25, // scale width as needed
-                                  height: sizeAdjustFactor / 3.5,
-                                  fit: BoxFit.scaleDown, // scale to fit box
+                                  width: sizeAdjustFactor * 0.6,
+                                  height: sizeAdjustFactor / 3,
+                                  fit: BoxFit.scaleDown,
                                 ),
+                        ),
+                      ],
                     ),
 
                     //  const SizedBox(height: 20), // spacer box 20 pixels high
@@ -146,8 +153,6 @@ class RadioTVAppState extends State<RadioTVApp> {
                     //VideoPlayerWidget(),
                     const SizedBox(height: 10), // 10 pixel separator line on the screen
 
-//
-//
 /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
               FutureBuilder(
                 future: _radioPlayer.getArtworkImage(),
@@ -178,7 +183,7 @@ class RadioTVAppState extends State<RadioTVApp> {
                   }
                 },
               ),
-// === Album Cover Displayed if available in radio stream*/
+// === END Album Cover Displayed if available in radio stream*/
                     //    SizedBox(height: 20), // spacer 20 pixels high
 /*     //=== Album Title and Song Title : remmed out not in spec.
               Text(
@@ -201,12 +206,9 @@ class RadioTVAppState extends State<RadioTVApp> {
 // === END Album Title and Song Title */
 // Sponsor Graphic here
                     SponsorGraphicWidget(),
-
-// === Social Media Row Icons inserted here from social_links.dart
                     const SizedBox(height: 10),
-                    // Social Media Row Icons here from separate file social_links.dart
+// === Social Media Row Icons inserted here from social_links.dart
                     SocialMediaLinksRow(),
-
 // Developer Info at bottom of page: Glanmire CoderDojo
                     SizedBox(
                       width: sizeAdjustFactor, // Adjust the width as needed
@@ -217,9 +219,6 @@ class RadioTVAppState extends State<RadioTVApp> {
                           borderRadius:
                               BorderRadius.circular(15.0), // Adjust the radius as needed
                         ),
-
-                        // color: Colors.blueGrey, // You can change the background color
-
                         child: Center(
                           child: Text(
                             developerInfo,
@@ -231,29 +230,6 @@ class RadioTVAppState extends State<RadioTVApp> {
                         ),
                       ),
                     ),
-                    // filler
-/*                    SizedBox(
-                    width: MediaQuery.of(context).size.width, // Adjust width to screen
-                    height: MediaQuery.of(context).size.width / 2,
-
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: customColor1, // You can change the background color
-                      ),
-
-                      // color: Colors.blueGrey, // You can change the background color
-
-                      child: Center(
-                        child: Text(
-                          "test",
-                          style: TextStyle(
-                            color: customColor1, // You can change the text color
-                            fontSize: 8, // You can change the font size
-                          ),
-                        ),
-                      ),
-                    ),
-                  )*/
                   ],
                 ),
               ),

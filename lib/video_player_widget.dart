@@ -1,3 +1,6 @@
+// video_player_widget.dart
+// this file displays the video from the radio studio if streamed.
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart'; // vid player library by Flutter Team
 
@@ -13,11 +16,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _videoPlayer;
   bool videoIsPlaying = false;
   bool hideVideoDisplay = false; // hide video display if no video stream is playing.
+  // ToDo modify this line to insert the correct Studio Feed URL : This is just a test video
+  //String studioVideoUrl = 'https://www.twitch.tv/corkcitycommunityradio';
   String studioVideoUrl =
       'https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8';
 
-  /// CCR Studio Video feed url
-  // 'https://youtu.be/X2wKE1RPULg')); // CCR website video : link is to Youtube!
+  /// CCR Studio Video feed url // 'https://youtu.be/X2wKE1RPULg')); // CCR website video : link is to Youtube!
 
   @override
   void initState() {
@@ -66,7 +70,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     sizeAdjustFactor = sizeAdjustFactor.clamp(0.0, maxSize); // clamp to maxsize
     iconSize = iconSize.clamp(0.0, maxSize * 0.5); //clamp to max size
 
-    // size adjustments above
+// size adjustments above
 //If the video is not displaying due to an error or an absence of the video stream,
 // use Visibility widget to hide / shrink the container.
 // use VideoPlayerController's listener to detect errors and update the UI accordingly.
@@ -109,13 +113,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               child: _videoPlayer.value.isPlaying // test isPlaying boolean
                   ? Image.asset(
                       'assets/watch_live_pause.jpg',
-                      width: sizeAdjustFactor * 1.25, // scale width as needed
+                      width: sizeAdjustFactor, // scale width as needed
                       height: sizeAdjustFactor / 3.5, // 80,
                       fit: BoxFit.scaleDown,
                     )
                   : Image.asset(
                       'assets/watch_live.jpg',
-                      width: sizeAdjustFactor * 1.25, // scale width as needed
+                      width: sizeAdjustFactor, // scale width as needed
                       height: sizeAdjustFactor / 3.5, // 80,
                       fit: BoxFit.scaleDown,
                     ),

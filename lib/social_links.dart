@@ -1,3 +1,4 @@
+// social_lnks.dart
 // This file builds the social media icons and urls Row Module
 // It is called from main.dart to build the social media icons row in main.dart
 // ChatGPT assisted code. Oct 2023.
@@ -92,8 +93,7 @@ class CircularSocialMediaIcon extends StatelessWidget {
         onTap: () {
           // Handle the url icon tap e.g., open a web page - Facebook etc
           // You can use the url_launcher library package for this on pub.dev.
-          // Example:
-          //launchUrl(url as Uri);
+          // Example: launchUrl(url as Uri);
           // Convert the url to Uri before launching it
           launchUrl(Uri.parse(url)); // ChatGPT suggest parse : works
         },
