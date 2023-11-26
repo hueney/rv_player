@@ -1,8 +1,10 @@
-// video_player.dart
+// video_player_widget.dart
 // this file displays the video from the radio studio if streamed.
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart'; // vid player library by Flutter Team
+
+import 'app_parameters.dart'; // Import the app_parameters file
 
 class VideoPlayerWidget extends StatefulWidget {
   const VideoPlayerWidget({Key? key}) : super(key: key);
@@ -12,15 +14,13 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  //define video player parameters here
+  // Enter your radio station's URLs in app_parameters.dart
+  // Use AppParameters to access your parameters
+  //String studioVideoUrl = 'https://www.twitch.tv/corkcitycommunityradio';
+  String studioVideoUrl = AppParameters.studioVideoURL;
+
   late VideoPlayerController _videoPlayer;
   bool validVideo = false; // first check for validVideo stream : exists and no errors
-
-  // ToDo modify this line to insert the correct Studio Feed URL : This is just a test video
-  // Video Stream source URL
-  //String studioVideoUrl = 'https://www.twitch.tv/corkcitycommunityradio';
-  String studioVideoUrl =
-      'https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8';
 
   @override
   void initState() {
@@ -98,18 +98,28 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         children: <Widget>[
           // if the video is playing then show the video else show placeholder image
           _videoPlayer.value.isPlaying
-              ? AspectRatio(
-                  aspectRatio: _videoPlayer.value.aspectRatio,
-                  child: VideoPlayer(_videoPlayer), // play the video
-                )
-              : AspectRatio(
-                  aspectRatio: _videoPlayer.value.aspectRatio ?? 1.0,
-                  child: Image.asset(
-                    'assets/ccr_studio1a.jpg', // Replace with your placeholder image
-                    fit: BoxFit.cover,
+              ? Expanded(
+                  //flex: 3,
+                  child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: AspectRatio(
+                    aspectRatio: _videoPlayer.value.aspectRatio,
+                    child: VideoPlayer(_videoPlayer), // play the video
+                  ),
+                ))
+              : Expanded(
+                  //flex: 3,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: AspectRatio(
+                      aspectRatio: _videoPlayer.value.aspectRatio ?? 1.0,
+                      child: Image.asset(
+                        'assets/ccr_studio1a.jpg', // Replace with your placeholder image
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-
 // Watch Live Button: Video Play and Pause Button : invisible (hide) if no video stream.
           Padding(
             padding: const EdgeInsets.all(8.0),

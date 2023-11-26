@@ -5,12 +5,14 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:radio_player/radio_player.dart';
-import 'package:rv_player/sponsor.dart';
-import 'package:rv_player/video_player.dart';
+import 'package:rv_player/radio_player_widget.dart';
+import 'package:rv_player/sponsor_widget.dart';
+import 'package:rv_player/video_player_widget.dart';
 
-import 'social_links.dart';
+import 'app_parameters.dart'; // Import the app_parameters file
+import 'social_links_widget.dart';
 
+//import 'radio_player_widget.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const RadioTVApp());
@@ -25,37 +27,21 @@ class RadioTVApp extends StatefulWidget {
 }
 
 class RadioTVAppState extends State<RadioTVApp> {
-  //Define Radio Station Parameters here
-  String radioStationName = 'Cork Community Radio Player';
-  String radioStationUrl = 'http://stream.cr.ie:8002/mp3'; // Cork Community Radio Stream
-  String radioStationImagePath = 'assets/cccr.jpg';
-  bool radioIsPlaying = false;
-  final RadioPlayer _radioPlayer = RadioPlayer();
-  String developerInfo = "@Coder Dojo Club - Glanmire 2023";
+  // Enter your radio station's URLs in app_parameters.dart
+  // Use AppParameters to access your parameters
+  // String radioStationName = AppParameters.radioStationName;
+  //String radioStationUrl = AppParameters.radioStationURL;
+  //String radioStationImagePath = AppParameters.radioStationImagePath;
+  //bool radioIsPlaying = false;
+  //final RadioPlayer _radioPlayer = RadioPlayer();
+  String developerInfo = AppParameters.developerInfo;
 
   List<String>? metadata; // metadata in radio stream contains artist or Album cover image
 
   @override
   void initState() {
     super.initState();
-    initRadioPlayer(); // initialise the radio player plugin
-  }
-
-  void initRadioPlayer() {
-    _radioPlayer.setChannel(
-        title: radioStationName, url: radioStationUrl, imagePath: radioStationImagePath);
-
-    _radioPlayer.stateStream.listen((value) {
-      setState(() {
-        radioIsPlaying = value;
-      });
-    });
-    //print("radio IS PLAYING $radioIsPlaying");
-    _radioPlayer.metadataStream.listen((value) {
-      setState(() {
-        metadata = value;
-      });
-    });
+    //  initRadioPlayer(); // initialise the radio player plugin
   }
 
 // Build Screen here
@@ -82,73 +68,46 @@ class RadioTVAppState extends State<RadioTVApp> {
           // body: Container(
           //   color: customColor1, // Set the background color of the Scaffold
           //   height: MediaQuery.of(context).size.height, // Set height to fill the screen
-          body: SingleChildScrollView(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: customColor1, // fill the screen with Brand color
-              ),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        // Cork Community Radio Brand Circle Image
-
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: sizeAdjustFactor * 0.8,
-                            height: sizeAdjustFactor *
-                                0.8, // auto adjusted for different screen sizes
-
-                            child: ClipRRect(
-                              child: Image.asset(
-                                radioStationImagePath,
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        // Listen Live Radio Button
-                        ElevatedButton(
-                          onPressed: () {
-                            // Define the action to be performed when the button is pressed.
-                            // radioIsPlaying boolean value is set to false on initialization.
-                            radioIsPlaying ? _radioPlayer.pause() : _radioPlayer.play();
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(customColor1),
-                          ),
-                          child: radioIsPlaying
-                              ? Image.asset(
-                                  'assets/listen_live_pause.jpg',
-                                  width: sizeAdjustFactor * 0.6,
-                                  height: sizeAdjustFactor / 3,
-                                  fit: BoxFit.scaleDown,
-                                )
-                              : Image.asset(
-                                  'assets/listen_live.jpg',
-                                  width: sizeAdjustFactor * 0.6,
-                                  height: sizeAdjustFactor / 3,
-                                  fit: BoxFit.scaleDown,
-                                ),
-                        ),
-                      ],
-                    ),
-
+          // body: SingleChildScrollView(
+          //   child: Container(
+          body: Container(
+            decoration: const BoxDecoration(
+              color: customColor1, // fill the screen with Brand color
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                    flex: 4, // adjust flex factor as needed
+                    child:
+                        // Radio Player Widget
+                        const RadioPlayerWidget(),
+                  ),
 // Video Player Container
-                    const VideoPlayerWidget(), // display the Video here
-                    const SizedBox(height: 10), // 10 pixel separator line
+                  Expanded(
+                    flex: 7, // adjust flex factor as needed
+                    child: const VideoPlayerWidget(), // display the Video here
+                  ),
+                  const SizedBox(height: 10), // 10 pixel separator line
+
 // Sponsor Graphic
-                    const SponsorGraphicWidget(),
-                    const SizedBox(height: 10),
-// Social Media Row Icons
-                    const SocialMediaLinksRow(),
+                  Expanded(
+                    flex: 3, // adjust flex factor as needed
+                    child: const SponsorGraphicWidget(),
+                  ),
+                  // Divider line
+                  const SizedBox(height: 10),
+                  // Social Media Row Icons
+                  Expanded(
+                    flex: 1, // adjust flex factor as needed
+                    child: const SocialMediaLinksRow(),
+                  ),
 // Developer Info
-                    SizedBox(
+                  Expanded(
+                    flex: 1, // adjust flex factor as needed
+                    child: SizedBox(
                       width: sizeAdjustFactor, // Adjust the width as needed
                       height: sizeAdjustFactor / 10, // Adjust the height as needed
                       child: Container(
@@ -168,9 +127,9 @@ class RadioTVAppState extends State<RadioTVApp> {
                         ),
                       ),
                     ),
-
+                  ),
 ///////// original code to display the Album cover graphic and song title from the radio steam... not used in this application.
-                    /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
+                  /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
               FutureBuilder(
                 future: _radioPlayer.getArtworkImage(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -201,7 +160,7 @@ class RadioTVAppState extends State<RadioTVApp> {
                 },
               ),
 // === END Album Cover Displayed if available in radio stream*/
-                    //    SizedBox(height: 20), // spacer 20 pixels high
+                  //    SizedBox(height: 20), // spacer 20 pixels high
 /*     //=== Album Title and Song Title : remmed out not in spec.
               Text(
                 metadata?[0] ?? '',
@@ -222,13 +181,13 @@ class RadioTVAppState extends State<RadioTVApp> {
 
 // === END Album Title and Song Title */
 //
-                  ],
-                ),
+                ],
               ),
             ),
           ),
         ),
       ),
+      // ),
     );
   } // end of Build Screen
 } // END of Class

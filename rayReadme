@@ -1,5 +1,18 @@
 Ray Notes:
 
+Important: To uninstall an old version of the app on some smartphones
+C:\Users\Ray\AppData\Local\Android\Sdk\platform-tools>adb uninstall com.glanmirecoderdojo.rv_player
+
+Emulator problems ...
+C:\Users\Ray\AppData\Local\Android\Sdk>flutter config --android-sdk C:\Users\Ray\AppData\Local\Android\Sdk
+Setting "android-sdk" value to "C:\Users\Ray\AppData\Local\Android\Sdk".
+
+You may need to restart any open editors for them to read new settings.
+
+C:\Users\Ray\AppData\Local\Android\Sdk>
+
+
+====================================
 Radio Player for Cork Community Radio
 
 images used
@@ -9,11 +22,8 @@ https://cccr2016.files.wordpress.com/2023/04/listen-live.webp
 
 ------------------
 How to adjust image size for diff screen sizes .use MediaQuery to get device dimensions
-
 You can give custom height and width to the image or parent widget to show accordingly screen resolutions.
-
 Here is the different way to get width and height.
-
 Getting width is easy but height can be tricky, following are the ways to deal with height
 
 // Full screen width and height
@@ -29,11 +39,49 @@ double height2 = height - padding.top;
 
 // Height (without status and toolbar)
 double height3 = height - padding.top - kToolbarHeight;
-You can use width /2 or /3 for the width of the image and the same for height. It will work for Android, iOS, or other platforms too.
+You can use width /2 or /3 for the width of the image and the same for height.
+It will work for Android, iOS, or other platforms too.
 -----------------
+In Flutter, there are several widgets you can use to size an image
+ while adapting to the screen width and maintaining its aspect ratio.
+  Here are some commonly used widgets for this purpose:
 
-------- images in the app
-You'd simple need to arrange your files as follow:
+AspectRatio Widget:
+
+The AspectRatio widget allows you to specify a desired aspect ratio for a child widget.
+AspectRatio(
+  aspectRatio: 16 / 9, // Replace with your desired aspect ratio
+  child: Image.asset('your_image_path.jpg'),
+)
+FractionallySizedBox Widget:
+
+The FractionallySizedBox widget sizes its child to a fraction of the total available space.
+FractionallySizedBox(
+  widthFactor: 0.8, // Replace with your desired width factor
+  child: Image.asset('your_image_path.jpg'),
+)
+LayoutBuilder Widget:
+
+The LayoutBuilder widget provides constraints to its builder function,
+allowing you to calculate and set the size based on constraints.
+LayoutBuilder(
+  builder: (BuildContext context, BoxConstraints constraints) {
+    double width = constraints.maxWidth * 0.8; // Replace with your desired width factor
+    return Image.asset('your_image_path.jpg', width: width);
+  },
+)
+MediaQuery Widget:
+
+The MediaQuery widget provides information about the current app and device.
+double screenWidth = MediaQuery.of(context).size.width;
+double desiredWidth = screenWidth * 0.8; // Replace with your desired width factor
+Image.asset('your_image_path.jpg', width: desiredWidth)
+Choose the widget that best fits your layout requirements and the way you want to manage
+ the sizing of the image. The AspectRatio widget is particularly useful
+ when you want to maintain a specific aspect ratio.
+-------
+images in the app
+You need to arrange your files as follow:
 
 images/0.75x/my_icon.png (ldpi inside 0.75x folder)
 images/my_icon.png (mdpi directly inside images)
@@ -46,8 +94,10 @@ And when you use Image.asset("images/my_icon.png") flutter will automatically as
 -----------------
 
 Unable to uninstall App on your phone.
-Android studio cant install apk file as old app isnt fully uninstalled:
-So
+Android studio cant install apk file as old app isn't fully uninstalled:
+
+So here is the Answer from stackoverflow:-
+
 1. Open cmd in windows or Terminal in Android Studio
 2. Goto this location in cmd: C:\Users\[user]\AppData\Local\Android\sdk\platform-tools
 3. Type this command: adb uninstall com.example.application.name(Package name)

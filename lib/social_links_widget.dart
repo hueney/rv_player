@@ -1,4 +1,4 @@
-// social_links.dart
+// social_links_widget.dart
 // This file builds the social media icons and urls Row Module
 // It is called from main.dart to build the social media icons row in main.dart
 // ChatGPT assisted code. Oct 2023.
