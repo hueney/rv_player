@@ -1,44 +1,54 @@
 // sponsor.dart :: ChatGPT assisted code. Fix on Stackoverflow
 
-// this code displays the Sponsor Graphic fetched from the Radio station website - sponsor.jpg
+// This code displays the Sponsor Graphic fetched from the Radio station website - sponsor.jpg
 // it also loads the Sponsor text file which contains the Sponsor Website url sponsorURL.txt
 // Users can tap on the Sponsor Graphic and goto the Sponsor Website ... big selling benefit.
-// if there is an error in displaying the Sponsor image make the container invisible ..hide it
-// use Visibility code see video player code
+// if there is an error in displaying the Sponsor image load an asset placeholder image
 
-// https://stackoverflow.com/questions/52568872/flutter-how-to-handle-image-network-error-like-404-or-wrong-url/66167613#66167613
+// Note in debug mode the web error codes are displayed but not when you release in release mode.
 // stackoverflow answered it: no 404 error in release version of the apk - so ignore in dev apk.
+// https://stackoverflow.com/questions/52568872/flutter-how-to-handle-image-network-error-like-404-or-wrong-url/66167613#66167613
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SponsorGraphicWidget extends StatefulWidget {
+  // Add a named key parameter to the constructor
+  const SponsorGraphicWidget({Key? key}) : super(key: key);
   @override
   SponsorGraphicWidgetState createState() => SponsorGraphicWidgetState();
 }
 
 class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
-  //final String sponsorGraphicUrl = 'https://cccr2016.files.wordpress.com/2023/02/community-centre-facade-2.jpg?w=2046';
-
+  //Test url
   final String sponsorGraphicUrl =
-      'https://storage.googleapis.com/dam-mus-prd-7e2fdbe.mus.prd.v8.commerce.mi9cloud.com/Images/App/Service-RR-780x450.jpg';
+      'https://cccr2016.files.wordpress.com/2023/02/community-centre-facade-2.jpg?w=2046';
 
-  //location of sponsor url
+  // final String sponsorGraphicUrl =
+  // 'https://storage.googleapis.com/dam-mus-prd-7e2fdbe.mus.prd.v8.commerce.mi9cloud.com/Images/App/Service-RR-780x450.jpg';
+
+  //location of sponsor website url in sponsorURL.txt on the App owner website.
   String sponsorTextURL =
       'https://raw.githubusercontent.com/rayzor/rv_player/main/sponsorURL.txt';
-  // sponsorWebURL : onTap of Sponsor graphic to go to the Sponsor website
-  String sponsorWebURL = ''; // extracted from the file at sponsorTextUrl
+
+  // sponsorWebsiteURL : onTap of Sponsor graphic to go to the Sponsor website
+  String sponsorWebsiteURL =
+      'https://cr.ie/'; // Default jic : extracted from the file at sponsorTextUrl
+
+  bool allowOnTap =
+      false; // only allow onTap on sponsor image if we get legit sponsor graphic and legit url
+  bool showPlaceholder = false; // use this boolean if network image fails
 
   @override
   void initState() {
     super.initState();
-    fetchSponsorURL();
+    getSponsorURL(); // from radio station text file called sponsor.txt
   }
 
   @override
   Widget build(BuildContext context) {
-    // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
+    // Parameters: This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery
     double screenWidth = MediaQuery.of(context).size.width;
     double sizeAdjustFactor = screenWidth;
@@ -47,75 +57,81 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
     sizeAdjustFactor = sizeAdjustFactor.clamp(0.0, maxSize); // clamp to maxsize
     iconSize = iconSize.clamp(0.0, maxSize * 0.5); //clamp to max size
 
-    // ChatGPT : use Inkwell to wrap the sponsor graphic with onTap method
+    // ChatGPT : use Inkwell to wrap the sponsor graphic with onTap method to launch link to the Sponsor website
     return InkWell(
       onTap: () {
-        if (sponsorWebURL != null && sponsorWebURL.isNotEmpty) {
-          launchUrlString(sponsorWebURL); // onTap goto Sponsor website
+        //allow OnTap if we load the Sponsor Image else don't.
+        if (allowOnTap) {
+          launchUrlString(sponsorWebsiteURL);
         }
       },
       child: FutureBuilder(
-        future: loadImage(),
+        future: getSponsorImage(sizeAdjustFactor),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // While the image is being loaded, you can show a loading indicator.
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            return Visibility(
-              visible: false,
-              child: Container(),
-            );
+            // print("Error in FutureBuilder: ${snapshot.error}");
+            return Container(); // Or any other non-null widget
           } else {
-            // Once the image is loaded, display it.
-            return Image.network(
-              sponsorGraphicUrl,
-              width: sizeAdjustFactor, // scale as needed
-              height: sizeAdjustFactor / 1.5,
-              fit: BoxFit.cover,
-            );
+            return snapshot.data ?? Container();
           }
         },
       ),
     );
-  }
+  } // end Build screen
 
-  // Code to load image from web : if no image or error then hide with Visibility widget.
-  Future<Widget> loadImage() async {
-    print("IN loadImage ...sponsorGraphicURL is $sponsorGraphicUrl");
+  // IMAGE get code
+  // Code to load image from web : if no image or error then show placeholder
+  Future<Widget> getSponsorImage(double sizeAdjustFactor) async {
     try {
-      // Fetch the image.
-      return Image(
-        image: NetworkImage(sponsorGraphicUrl),
-        fit: BoxFit.cover,
-      );
-    } catch (_) {
-      // If there's an error loading the image, hide the display
-      return Visibility(
-        visible: false,
-        child: Container(),
-      );
-    }
-  }
+      final response = await http.get(Uri.parse(sponsorGraphicUrl));
 
-  // ChatGPT : how to extract sponsor URL from remote website without downloading the file: Brill
-
-  Future<void> fetchSponsorURL() async {
-    final url = Uri.parse(sponsorTextURL); // Replace with your URL
-
-    try {
-      final response = await http.get(url);
       if (response.statusCode == 200) {
-        extractUrl(response.body);
-      } else {}
+        showPlaceholder = false; // got good response so dont show placeholder
+        allowOnTap = true; // Sponsor Image then allow Tap to go to Sponsor website
+
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Image.network(
+            sponsorGraphicUrl,
+            width: sizeAdjustFactor,
+            height: sizeAdjustFactor / 1.5,
+            fit: BoxFit.cover,
+          ),
+        );
+      } else {
+        showPlaceholder = true;
+        allowOnTap = false; // if no Sponsor then do not allow Tap to go to website
+
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Image.asset(
+            'assets/sponsorPlaceholder.jpg',
+            width: sizeAdjustFactor,
+            height: sizeAdjustFactor / 1.5,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
     } catch (e) {
-      print('Error fetching content: $e');
+      // print("Error in getSponsorImage: $e");
+      return Container(); // Return an empty container in case of an error
     }
   }
 
-  void extractUrl(String responseBody) {
-    setState(() {
-      sponsorWebURL = responseBody.trim(); // Trim to remove leading/trailing whitespace
-    });
+  // ChatGPT : how to extract sponsor URL from remote website without downloading the file: Brill use raw
+  // URL extraction code
+  Future<void> getSponsorURL() async {
+    final url = Uri.parse(sponsorTextURL); // extract the URL from the sponsor.txt file
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      // 200 is success code from browser so get website url from text file and trim.
+      sponsorWebsiteURL = (response.body).trim(); //
+      allowOnTap = true; // allow tap on Sponsor image to go to their Website
+    } else {
+      allowOnTap = false;
+    }
   }
 }
 

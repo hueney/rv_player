@@ -1,4 +1,4 @@
-// social_lnks.dart
+// social_links.dart
 // This file builds the social media icons and urls Row Module
 // It is called from main.dart to build the social media icons row in main.dart
 // ChatGPT assisted code. Oct 2023.
@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 // This code has the icons and colors and links for the social media buttons.
 class SocialMediaLinksRow extends StatelessWidget {
+  const SocialMediaLinksRow({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Row(
@@ -65,8 +66,7 @@ class CircularSocialMediaIcon extends StatelessWidget {
   });
 
 // This code is a Future to launch the url link
-// see docs on pub.dev for all options
-  // We use the 'launch in browser'
+// see docs on pub.dev for all options We use the 'launch in browser'
   Future<void> launchInBrowser(Uri url) async {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
@@ -117,6 +117,7 @@ class CircularSocialMediaIcon extends StatelessWidget {
     );
   }
 }
+//
 //Chat GPT assisted code:
 //The CircularSocialMediaIcon widget now accepts a backgroundColor parameter,
 // allowing you to specify the background color for each social media icon.

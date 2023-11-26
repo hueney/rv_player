@@ -36,7 +36,7 @@ dependencies:
   font_awesome_flutter: ^10.6.0 # for social media icons
   video_player: ^2.8.1
   cached_network_image: ^3.3.0
-
+  http: ^1.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -77,6 +77,8 @@ flutter:
     - assets/Instagram_Glyph_White.png
     - assets/watch_live_pause.jpg
     - assets/watch_live.jpg
+    - assets/ccr_studio1a.jpg
+    - assets/sponsorPlaceholder.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

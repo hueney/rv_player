@@ -1,4 +1,4 @@
-/*  main.dart : Radio Video APP for Community Radio stations
+/*  main.dart : Radio Video Sponsor APP for Community Radio stations
  *  Base Code created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
  * Modified by the super Kids of Coder Dojo Club Glanmire, Cork, Ireland  Oct 2023
  * for Cork Community Radio, Ireland
@@ -7,16 +7,19 @@
 import 'package:flutter/material.dart';
 import 'package:radio_player/radio_player.dart';
 import 'package:rv_player/sponsor.dart';
-import 'package:rv_player/video_player_widget.dart';
+import 'package:rv_player/video_player.dart';
 
 import 'social_links.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(RadioTVApp());
+  runApp(const RadioTVApp());
 }
 
 class RadioTVApp extends StatefulWidget {
+  // Add a named key parameter to the constructor
+  const RadioTVApp({Key? key}) : super(key: key);
+
   @override
   RadioTVAppState createState() => RadioTVAppState();
 }
@@ -24,11 +27,11 @@ class RadioTVApp extends StatefulWidget {
 class RadioTVAppState extends State<RadioTVApp> {
   //Define Radio Station Parameters here
   String radioStationName = 'Cork Community Radio Player';
-  String radioStationUrl = 'http://stream.cr.ie:8002/mp3';
+  String radioStationUrl = 'http://stream.cr.ie:8002/mp3'; // Cork Community Radio Stream
   String radioStationImagePath = 'assets/cccr.jpg';
   bool radioIsPlaying = false;
   final RadioPlayer _radioPlayer = RadioPlayer();
-  String developerInfo = "@Glanmire Coder Dojo Club 2023";
+  String developerInfo = "@Coder Dojo Club - Glanmire 2023";
 
   List<String>? metadata; // metadata in radio stream contains artist or Album cover image
 
@@ -59,7 +62,7 @@ class RadioTVAppState extends State<RadioTVApp> {
   @override
   Widget build(BuildContext context) {
     // Define the custom color using RGB values of radio station website brand color
-    final customColor1 = Color.fromRGBO(115, 1, 3, 1.0); // CCR red brand color
+    const customColor1 = Color.fromRGBO(115, 1, 3, 1.0); // CCR red brand color
 
     // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery
@@ -72,22 +75,23 @@ class RadioTVAppState extends State<RadioTVApp> {
 
     //
     return MaterialApp(
-      home: Scaffold(
-        appBar: null, // nothing in the App Bar
-        body: SafeArea(
-          // Safe area means no image in the system top status bar.
-          child: SingleChildScrollView(
+      // Safe area means no image in the system top status bar.
+      home: SafeArea(
+        child: Scaffold(
+          appBar: null, // nothing in the App Bar
+          // body: Container(
+          //   color: customColor1, // Set the background color of the Scaffold
+          //   height: MediaQuery.of(context).size.height, // Set height to fill the screen
+          body: SingleChildScrollView(
             child: Container(
-              decoration: BoxDecoration(
-                color: customColor1,
+              decoration: const BoxDecoration(
+                color: customColor1, // fill the screen with Brand color
               ),
               child: Center(
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         // Cork Community Radio Brand Circle Image
 
@@ -135,25 +139,38 @@ class RadioTVAppState extends State<RadioTVApp> {
                       ],
                     ),
 
-                    //  const SizedBox(height: 20), // spacer box 20 pixels high
-                    //VideoPlayerWidget(radioIsPlaying: radioIsPlaying, ), // pass the radioPlayingBoolean to
-                    Container(
-                      padding: EdgeInsets.all(16.0), // Adjust the padding as needed
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: customColor1,
-                          //color: Colors.blueGrey, // Adjust the border color
-                          width: 2.0, // Adjust the border width
+// Video Player Container
+                    const VideoPlayerWidget(), // display the Video here
+                    const SizedBox(height: 10), // 10 pixel separator line
+// Sponsor Graphic
+                    const SponsorGraphicWidget(),
+                    const SizedBox(height: 10),
+// Social Media Row Icons
+                    const SocialMediaLinksRow(),
+// Developer Info
+                    SizedBox(
+                      width: sizeAdjustFactor, // Adjust the width as needed
+                      height: sizeAdjustFactor / 10, // Adjust the height as needed
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black12, // You can change the background color
+                          borderRadius:
+                              BorderRadius.circular(15.0), // Adjust the radius as needed
                         ),
-                        borderRadius:
-                            BorderRadius.circular(8.0), // Adjust the border radius
+                        child: Center(
+                          child: Text(
+                            developerInfo,
+                            style: const TextStyle(
+                              color: Colors.white, // You can change the text color
+                              fontSize: 8, // You can change the font size
+                            ),
+                          ),
+                        ),
                       ),
-                      child: VideoPlayerWidget(), // display the Video here
                     ),
-                    //VideoPlayerWidget(),
-                    const SizedBox(height: 10), // 10 pixel separator line on the screen
 
-/*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
+///////// original code to display the Album cover graphic and song title from the radio steam... not used in this application.
+                    /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
               FutureBuilder(
                 future: _radioPlayer.getArtworkImage(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -204,32 +221,7 @@ class RadioTVAppState extends State<RadioTVApp> {
               SizedBox(height: 20),
 
 // === END Album Title and Song Title */
-// Sponsor Graphic here
-                    SponsorGraphicWidget(),
-                    const SizedBox(height: 10),
-// === Social Media Row Icons inserted here from social_links.dart
-                    SocialMediaLinksRow(),
-// Developer Info at bottom of page: Glanmire CoderDojo
-                    SizedBox(
-                      width: sizeAdjustFactor, // Adjust the width as needed
-                      height: sizeAdjustFactor / 10, // Adjust the height as needed
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black12, // You can change the background color
-                          borderRadius:
-                              BorderRadius.circular(15.0), // Adjust the radius as needed
-                        ),
-                        child: Center(
-                          child: Text(
-                            developerInfo,
-                            style: TextStyle(
-                              color: Colors.white, // You can change the text color
-                              fontSize: 8, // You can change the font size
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+//
                   ],
                 ),
               ),
@@ -238,5 +230,5 @@ class RadioTVAppState extends State<RadioTVApp> {
         ),
       ),
     );
-  }
-}
+  } // end of Build Screen
+} // END of Class
