@@ -45,17 +45,13 @@ class _RadioPlayerWidgetState extends State<RadioPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Define the custom color using RGB values of radio station website brand color
-    const customColor1 = Color.fromRGBO(115, 1, 3, 1.0); // CCR red brand color
-
-    // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
-    // It gets the device screen size from MediaQuery
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sizeAdjustFactor = screenWidth;
-    double iconSize = sizeAdjustFactor * 0.6; //60% of container size
-    double maxSize = 200.0; // set a max jic - realistic
-    sizeAdjustFactor = sizeAdjustFactor.clamp(0.0, maxSize); // clamp to maxsize
-    iconSize = iconSize.clamp(0.0, maxSize * 0.5); //clamp to max size
+    // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
+    // It gets the device screen size from MediaQuery in app_parameters.dart file
+    // usage of parameters from AppParameters
+    final Color customColor1 = AppParameters.customColor1;
+    final double iconSize = AppParameters.getIconSize(context);
+    final double screenWidth = AppParameters.getScreenWidth(context);
+    final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

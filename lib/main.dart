@@ -30,10 +30,10 @@ class RadioTVAppState extends State<RadioTVApp> {
   // Enter your radio station's URLs in app_parameters.dart
   // Use AppParameters to access your parameters
   // String radioStationName = AppParameters.radioStationName;
-  //String radioStationUrl = AppParameters.radioStationURL;
-  //String radioStationImagePath = AppParameters.radioStationImagePath;
-  //bool radioIsPlaying = false;
-  //final RadioPlayer _radioPlayer = RadioPlayer();
+  // String radioStationUrl = AppParameters.radioStationURL;
+  // String radioStationImagePath = AppParameters.radioStationImagePath;
+  // bool radioIsPlaying = false;
+  // final RadioPlayer _radioPlayer = RadioPlayer();
   String developerInfo = AppParameters.developerInfo;
 
   List<String>? metadata; // metadata in radio stream contains artist or Album cover image
@@ -47,31 +47,22 @@ class RadioTVAppState extends State<RadioTVApp> {
 // Build Screen here
   @override
   Widget build(BuildContext context) {
-    // Define the custom color using RGB values of radio station website brand color
-    const customColor1 = Color.fromRGBO(115, 1, 3, 1.0); // CCR red brand color
+    // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
+    // It gets the device screen size from MediaQuery in app_parameters.dart file
+    // usage of parameters from AppParameters
+    final Color customColor1 = AppParameters.customColor1;
+    final double iconSize = AppParameters.getIconSize(context);
+    final double screenWidth = AppParameters.getScreenWidth(context);
+    final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
 
-    // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
-    // It gets the device screen size from MediaQuery
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sizeAdjustFactor = screenWidth;
-    double iconSize = sizeAdjustFactor * 0.6; //60% of container size
-    double maxSize = 200.0; // set a max jic - realistic
-    sizeAdjustFactor = sizeAdjustFactor.clamp(0.0, maxSize); // clamp to maxsize
-    iconSize = iconSize.clamp(0.0, maxSize * 0.5); //clamp to max size
-
-    //
     return MaterialApp(
       // Safe area means no image in the system top status bar.
       home: SafeArea(
         child: Scaffold(
           appBar: null, // nothing in the App Bar
-          // body: Container(
-          //   color: customColor1, // Set the background color of the Scaffold
-          //   height: MediaQuery.of(context).size.height, // Set height to fill the screen
-          // body: SingleChildScrollView(
-          //   child: Container(
+
           body: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: customColor1, // fill the screen with Brand color
             ),
             child: Center(
@@ -102,7 +93,7 @@ class RadioTVAppState extends State<RadioTVApp> {
                   // Social Media Row Icons
                   Expanded(
                     flex: 1, // adjust flex factor as needed
-                    child: const SocialMediaLinksRow(),
+                    child: SocialMediaLinksRow(),
                   ),
 // Developer Info
                   Expanded(
@@ -180,14 +171,12 @@ class RadioTVAppState extends State<RadioTVApp> {
               SizedBox(height: 20),
 
 // === END Album Title and Song Title */
-//
                 ],
               ),
             ),
           ),
         ),
       ),
-      // ),
     );
   } // end of Build Screen
 } // END of Class

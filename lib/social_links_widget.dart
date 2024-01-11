@@ -5,31 +5,46 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'app_parameters.dart';
 
 // This code has the icons and colors and links for the social media buttons.
 class SocialMediaLinksRow extends StatelessWidget {
-  const SocialMediaLinksRow({Key? key}) : super(key: key);
+  SocialMediaLinksRow({Key? key}) : super(key: key);
+
+  // Your own PlayStore or AppStore Link
+  String appStoreLink = AppParameters.appStoreLink;
+  String subject = AppParameters.emailSubject;
+  Color customColor1 = AppParameters.customColor1;
+
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      //crossAxisAlignment: CrossAxisAlignment.,
       children: <Widget>[
+        Spacer(), // ChatGPT assist spacer ..outer spacer!
         CircularSocialMediaIcon(
           icon: FontAwesomeIcons.globe, // website icon
           backgroundColor: Colors.pink, //
           url: 'https://cr.ie', // Cork Community Radio website
         ),
+        Spacer(),
         CircularSocialMediaIcon(
           icon: FontAwesomeIcons.facebook,
           backgroundColor: Colors.blue, // Blue background for Facebook
           url: 'https://www.facebook.com/CorkCityCommunityRadio',
         ),
+        Spacer(),
         CircularSocialMediaIcon(
             icon: FontAwesomeIcons.twitter,
             backgroundColor: Colors.blue, // Blue background for Twitter
             url: 'http://twitter.com/CorkCity_radio' //'https://twitter.com/',
             ),
+
         /*
         CircularSocialMediaIcon(
           icon: FontAwesomeIcons.youtube,
@@ -46,10 +61,55 @@ class SocialMediaLinksRow extends StatelessWidget {
           backgroundColor: Colors.black, // Black background for TikTok
           url: 'https://www.tiktok.com/@corkcitycommunityradio?_t=8X9fGFmX9Da&_r=1',
         ),*/
+
+/*        // SHARE BUTTON - Use Builder to get the widget context
+        Builder(
+          builder: (BuildContext context) {
+            return ElevatedButton(
+              onPressed: () => _onShare(context),
+              child: const Text('Share'),
+            );
+          },
+        ),*/
+
+        Spacer(),
+
+        // Chat GPT Brill : Share button with an icon
+        Builder(
+          builder: (BuildContext context) {
+            return GestureDetector(
+              onTap: () => _onShare(context),
+              child: Container(
+                width: sizeAdjustFactor / 7, //30, // Adjust the size as needed
+                height: sizeAdjustFactor / 7, // 30, // Adjust the size as needed
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue, // Change the color as needed
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.share,
+                    color: Colors.white, // Change the color as needed
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+        Spacer(),
       ],
     );
   }
-}
+
+  _onShare(BuildContext context) async {
+    // final RenderObject? box = context.findRenderObject();
+    await Share.share(
+      appStoreLink,
+      subject: subject,
+      // sharePositionOrigin: box?.localToGlobal(Offset.zero) & box.size
+    );
+  }
+} // END CLASS
 
 // This code takes the icon, url link and container color
 // It builds the icons in containers which can be pressed to goto Facebook etc
@@ -75,17 +135,17 @@ class CircularSocialMediaIcon extends StatelessWidget {
     }
   }
 
-  // This code Builds the screen
+  // This code Builds the onTap Container
   @override
   Widget build(BuildContext context) {
-    // This code adjusts the icon sizes for different screen sizes, phones , iPads, TVs.
-    // It gets the device screen size from MediaQuery
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sizeAdjustFactor = screenWidth;
-    double iconSize = sizeAdjustFactor * 0.6; //60% of container size
-    double maxSize = 200.0; // set a max jic - realistic
-    sizeAdjustFactor = sizeAdjustFactor.clamp(0.0, maxSize); // clamp to maxsize
-    iconSize = iconSize.clamp(0.0, maxSize * 0.5); //clamp to max size
+    // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
+    // It gets the device screen size from MediaQuery in app_parameters.dart file
+    // usage of parameters from AppParameters
+    final Color customColor1 = AppParameters.customColor1;
+    final double iconSize = AppParameters.getIconSize(context);
+    final double screenWidth = AppParameters.getScreenWidth(context);
+    final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
+    ////////////
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -98,8 +158,7 @@ class CircularSocialMediaIcon extends StatelessWidget {
           launchUrl(Uri.parse(url)); // ChatGPT suggest parse : works
         },
         child: Container(
-          width:
-              sizeAdjustFactor / 3, // adjusts to screen sizes based on phone screen size
+          width: sizeAdjustFactor / 3, // adjusts to screen sizes based on screen size
           height: sizeAdjustFactor / 7, // adjusts to screen sizes
           decoration: BoxDecoration(
             shape: BoxShape.circle,
