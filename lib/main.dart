@@ -50,9 +50,9 @@ class RadioTVAppState extends State<RadioTVApp> {
     // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery in app_parameters.dart file
     // usage of parameters from AppParameters
-    final Color customColor1 = AppParameters.customColor1;
-    final double iconSize = AppParameters.getIconSize(context);
-    final double screenWidth = AppParameters.getScreenWidth(context);
+    const Color customColor1 = AppParameters.customColor1;
+    //final double iconSize = AppParameters.getIconSize(context);
+    //final double screenWidth = AppParameters.getScreenWidth(context);
     final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
 
     return MaterialApp(
@@ -62,7 +62,7 @@ class RadioTVAppState extends State<RadioTVApp> {
           appBar: null, // nothing in the App Bar
 
           body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: customColor1, // fill the screen with Brand color
             ),
             child: Center(
@@ -70,28 +70,30 @@ class RadioTVAppState extends State<RadioTVApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Expanded(
+                  const Expanded(
                     flex: 4, // adjust flex factor as needed
                     child:
                         // Radio Player Widget
-                        const RadioPlayerWidget(),
+                        RadioPlayerWidget(),
                   ),
 // Video Player Container
-                  Expanded(
+                  const Expanded(
                     flex: 7, // adjust flex factor as needed
-                    child: const VideoPlayerWidget(), // display the Video here
+                    child: VideoPlayerWidget(), // display the Video here
                   ),
                   const SizedBox(height: 10), // 10 pixel separator line
 
 // Sponsor Graphic
-                  Expanded(
+                  const Expanded(
                     flex: 3, // adjust flex factor as needed
-                    child: const SponsorGraphicWidget(),
+                    child: SponsorGraphicWidget(),
                   ),
                   // Divider line
+
                   const SizedBox(height: 10),
+
                   // Social Media Row Icons
-                  Expanded(
+                  const Expanded(
                     flex: 1, // adjust flex factor as needed
                     child: SocialMediaLinksRow(),
                   ),

@@ -72,10 +72,10 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     // It gets the device screen size from MediaQuery in app_parameters.dart file
     // usage of parameters from AppParameters
     Color customColor1 = AppParameters.customColor1;
-    double iconSize = AppParameters.getIconSize(context);
-    double screenWidth = AppParameters.getScreenWidth(context);
+    //double iconSize = AppParameters.getIconSize(context);
+    //double screenWidth = AppParameters.getScreenWidth(context);
     double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
-    iconSize = AppParameters.getIconSize(context);
+    //iconSize = AppParameters.getIconSize(context);
 
 // size adjustments above
 //If the video is not available due to an error or an absence of the video stream,
@@ -110,7 +110,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: AspectRatio(
-                      aspectRatio: _videoPlayer.value.aspectRatio ?? 1.0,
+                      aspectRatio: _videoPlayer.value.aspectRatio, // ?? 1.0,
                       child: Image.asset(
                         'assets/ccr_studio1a.jpg', // Replace with your placeholder image
                         fit: BoxFit.cover,

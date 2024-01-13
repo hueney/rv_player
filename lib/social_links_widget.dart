@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,12 +13,12 @@ import 'app_parameters.dart';
 
 // This code has the icons and colors and links for the social media buttons.
 class SocialMediaLinksRow extends StatelessWidget {
-  SocialMediaLinksRow({Key? key}) : super(key: key);
+  const SocialMediaLinksRow({Key? key}) : super(key: key);
 
   // Your own PlayStore or AppStore Link
-  String appStoreLink = AppParameters.appStoreLink;
-  String subject = AppParameters.emailSubject;
-  Color customColor1 = AppParameters.customColor1;
+  final String appStoreLink = AppParameters.appStoreLink;
+  final String subject = AppParameters.emailSubject;
+  final Color customColor1 = AppParameters.customColor1;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +27,20 @@ class SocialMediaLinksRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       //crossAxisAlignment: CrossAxisAlignment.,
       children: <Widget>[
-        Spacer(), // ChatGPT assist spacer ..outer spacer!
-        CircularSocialMediaIcon(
+        const Spacer(), // ChatGPT assist spacer ..outer spacer!
+        const CircularSocialMediaIcon(
           icon: FontAwesomeIcons.globe, // website icon
           backgroundColor: Colors.pink, //
           url: 'https://cr.ie', // Cork Community Radio website
         ),
-        Spacer(),
-        CircularSocialMediaIcon(
+        const Spacer(),
+        const CircularSocialMediaIcon(
           icon: FontAwesomeIcons.facebook,
           backgroundColor: Colors.blue, // Blue background for Facebook
           url: 'https://www.facebook.com/CorkCityCommunityRadio',
         ),
-        Spacer(),
-        CircularSocialMediaIcon(
+        const Spacer(),
+        const CircularSocialMediaIcon(
             icon: FontAwesomeIcons.twitter,
             backgroundColor: Colors.blue, // Blue background for Twitter
             url: 'http://twitter.com/CorkCity_radio' //'https://twitter.com/',
@@ -72,7 +73,7 @@ class SocialMediaLinksRow extends StatelessWidget {
           },
         ),*/
 
-        Spacer(),
+        const Spacer(),
 
         // Chat GPT Brill : Share button with an icon
         Builder(
@@ -82,11 +83,11 @@ class SocialMediaLinksRow extends StatelessWidget {
               child: Container(
                 width: sizeAdjustFactor / 7, //30, // Adjust the size as needed
                 height: sizeAdjustFactor / 7, // 30, // Adjust the size as needed
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.blue, // Change the color as needed
                 ),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.share,
                     color: Colors.white, // Change the color as needed
@@ -96,15 +97,25 @@ class SocialMediaLinksRow extends StatelessWidget {
             );
           },
         ),
-        Spacer(),
+        const Spacer(),
       ],
     );
   }
 
   _onShare(BuildContext context) async {
-    // final RenderObject? box = context.findRenderObject();
+    // ToDo: Note: we use the package info plugin to get the package name and then concantanate into the Google Play store link
+    // This avoids embedding the link in the code. ToDo Apple App Store version?
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    //String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    //String version = packageInfo.version;
+    //String buildNumber = packageInfo.buildNumber;
+
+    String playStoreLink = 'https://play.google.com/store/apps/details?id=$packageName';
+
     await Share.share(
-      appStoreLink,
+      //appStoreLink,
+      playStoreLink,
       subject: subject,
       // sharePositionOrigin: box?.localToGlobal(Offset.zero) & box.size
     );
@@ -119,7 +130,10 @@ class CircularSocialMediaIcon extends StatelessWidget {
   final Color backgroundColor;
 
   // This code is called the Constructor: It is needed to setup memory for the variables.
-  const CircularSocialMediaIcon({
+  const CircularSocialMediaIcon(
+      //{Key? key}) : super(key: key);
+
+      {
     required this.icon,
     required this.url,
     required this.backgroundColor,
@@ -141,9 +155,9 @@ class CircularSocialMediaIcon extends StatelessWidget {
     // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery in app_parameters.dart file
     // usage of parameters from AppParameters
-    final Color customColor1 = AppParameters.customColor1;
-    final double iconSize = AppParameters.getIconSize(context);
-    final double screenWidth = AppParameters.getScreenWidth(context);
+    //final Color customColor1 = AppParameters.customColor1;
+    //final double iconSize = AppParameters.getIconSize(context);
+    //final double screenWidth = AppParameters.getScreenWidth(context);
     final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
     ////////////
 

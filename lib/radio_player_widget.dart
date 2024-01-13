@@ -7,10 +7,10 @@ class RadioPlayerWidget extends StatefulWidget {
   const RadioPlayerWidget({Key? key}) : super(key: key);
 
   @override
-  _RadioPlayerWidgetState createState() => _RadioPlayerWidgetState();
+  RadioPlayerWidgetState createState() => RadioPlayerWidgetState();
 }
 
-class _RadioPlayerWidgetState extends State<RadioPlayerWidget> {
+class RadioPlayerWidgetState extends State<RadioPlayerWidget> {
   late final RadioPlayer _radioPlayer;
   String radioStationImagePath = AppParameters.radioStationImagePath;
   late bool radioIsPlaying = false;
@@ -48,9 +48,9 @@ class _RadioPlayerWidgetState extends State<RadioPlayerWidget> {
     // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery in app_parameters.dart file
     // usage of parameters from AppParameters
-    final Color customColor1 = AppParameters.customColor1;
-    final double iconSize = AppParameters.getIconSize(context);
-    final double screenWidth = AppParameters.getScreenWidth(context);
+    const Color customColor1 = AppParameters.customColor1;
+    //final double iconSize = AppParameters.getIconSize(context);
+    //final double screenWidth = AppParameters.getScreenWidth(context);
     final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
 
     return Row(
@@ -59,7 +59,7 @@ class _RadioPlayerWidgetState extends State<RadioPlayerWidget> {
         // Cork Community Radio Brand Circle Image
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Container(
+          child: SizedBox(
             width: sizeAdjustFactor * 0.8,
             height: sizeAdjustFactor * 0.8, // auto adjusted for different screen sizes
 
