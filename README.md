@@ -7,7 +7,8 @@ It has the following functionality:-
 - Sponsor graphic with link to their website.
 
 This App was designed and coded by the members of:
-Coder Dojo Club, Glanmire, Cork, Ireland. @2023
+
+@Coder Dojo Club, Glanmire, Cork, Ireland. 
 
 SETUP:
 1. Download the app code from github at: https://github.com/rayzor/rv_player/tree/main
