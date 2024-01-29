@@ -32,6 +32,13 @@ migrate_working_dir/
 .pub/
 /build/
 
+pubspec.lock
+.flutter-plugins
+ios/.generated/
+rayReadme
+rayTODO
+
+
 # Symbolication related
 app.*.symbols
 
@@ -42,3 +49,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/key.properties
+**/android/**/GeneratedPluginRegistrant.java

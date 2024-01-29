@@ -5,7 +5,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,8 +14,8 @@ import 'app_parameters.dart';
 class SocialMediaLinksRow extends StatelessWidget {
   const SocialMediaLinksRow({Key? key}) : super(key: key);
 
-  // Your own PlayStore or AppStore Link
-  final String appStoreLink = AppParameters.appStoreLink;
+  // the Share link for Google PlayStore or Apple AppStore Link
+  final String appShareLink = AppParameters.appShareLink;
   final String subject = AppParameters.emailSubject;
   final Color customColor1 = AppParameters.customColor1;
 
@@ -63,16 +62,6 @@ class SocialMediaLinksRow extends StatelessWidget {
           url: 'https://www.tiktok.com/@corkcitycommunityradio?_t=8X9fGFmX9Da&_r=1',
         ),*/
 
-/*        // SHARE BUTTON - Use Builder to get the widget context
-        Builder(
-          builder: (BuildContext context) {
-            return ElevatedButton(
-              onPressed: () => _onShare(context),
-              child: const Text('Share'),
-            );
-          },
-        ),*/
-
         const Spacer(),
 
         // Chat GPT Brill : Share button with an icon
@@ -102,20 +91,22 @@ class SocialMediaLinksRow extends StatelessWidget {
     );
   }
 
+  // on_Share called from share button : Ignore PackageInfo plugin library now.
   _onShare(BuildContext context) async {
     // ToDo: Note: we use the package info plugin to get the package name and then concantanate into the Google Play store link
     // This avoids embedding the link in the code. ToDo Apple App Store version?
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    //PackageInfo packageInfo = await PackageInfo.fromPlatform();
     //String appName = packageInfo.appName;
-    String packageName = packageInfo.packageName;
+    // String packageName = packageInfo.packageName;
     //String version = packageInfo.version;
     //String buildNumber = packageInfo.buildNumber;
-
-    String playStoreLink = 'https://play.google.com/store/apps/details?id=$packageName';
+    // REM Old code String playStoreLink = 'https://play.google.com/store/apps/details?id=$packageName';
+    // String playStoreLink = appShareLink;
 
     await Share.share(
-      //appStoreLink,
-      playStoreLink,
+      // playStoreLink,
+      // appShareLink has the Google Play store OR Apple App store link from app_parameters now.
+      appShareLink,
       subject: subject,
       // sharePositionOrigin: box?.localToGlobal(Offset.zero) & box.size
     );
@@ -208,3 +199,7 @@ class CircularSocialMediaIcon extends StatelessWidget {
 //Please make sure to use the corrected code above to handle URL launching.
 // The await keyword should be used in these specific functions to ensure they complete successfully
 // before moving on to the next step
+
+// Ray Neville 2023
+// Denis O'Mahony
+// Nathan Manley

@@ -18,6 +18,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   // Use AppParameters to access your parameters
   //String studioVideoUrl = 'https://www.twitch.tv/corkcitycommunityradio';
   String studioVideoUrl = AppParameters.studioVideoURL;
+  String videoPlaceholder = AppParameters.videoPlaceholder;
 
   late VideoPlayerController _videoPlayer;
   bool validVideo = false; // first check for validVideo stream : exists and no errors
@@ -111,8 +112,9 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     borderRadius: BorderRadius.circular(10.0),
                     child: AspectRatio(
                       aspectRatio: _videoPlayer.value.aspectRatio, // ?? 1.0,
+                      // child: Image.asset( 'assets/ccr_studio1a.jpg',
                       child: Image.asset(
-                        'assets/ccr_studio1a.jpg', // Replace with your placeholder image
+                        videoPlaceholder, // when no video
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -167,3 +169,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _videoPlayer.dispose();
   }
 }
+
+// Ray Neville 2023
+// Denis O'Mahony
+// Nathan Manley

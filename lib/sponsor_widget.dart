@@ -28,8 +28,10 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
   String sponsorGraphicURL = AppParameters.sponsorGraphicUrl;
   String sponsorTextURL = AppParameters.sponsorTextURL;
 
-  // Define default sponsorWebsiteURL : onTap of Sponsor graphic to go to the Sponsor website
-  String sponsorWebsiteURL = 'https://cr.ie/'; // Default jic
+  // Define default sponsorWebsiteURL : onTap of Sponsor graphic go to the Sponsor website
+  // String sponsorWebsiteURL = 'https://cr.ie/'; // Default jic
+  String sponsorWebsiteURL = AppParameters.sponsorWebsiteURL;
+
   String sponsorPlaceholder = AppParameters.sponsorPlaceholder; //jic if no graphic
 
   bool allowOnTap =
@@ -119,9 +121,8 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.asset(
-                //'assets/sponsorPlaceholder.jpg',
+                sponsorPlaceholder, // 'assets/sponsorPlaceholder.jpg',
 
-                sponsorPlaceholder,
                 fit: BoxFit.scaleDown,
               ),
             ),
@@ -230,3 +231,7 @@ during network operations. It leverages Flutter's widget-based approach
 
 
  */
+
+// Ray Neville 2023
+// Denis O'Mahony
+// Nathan Manley

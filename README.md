@@ -5,9 +5,13 @@ It has the following functionality:-
 - Radio player 
 - Video player for studio interviews
 - Sponsor graphic with link to their website.
+- Social Media buttons
+- Share button
 
 This App was designed and coded by the members of:
-Coder Dojo Club, Glanmire, Cork, Ireland. @2023
+Coder Dojo Club, Glanmire, Cork, Ireland. Copyright@2023
+
+Privacy Policy site is: https://sites.google.com/view/greenroseapps/home
 
 SETUP:
 1. Download the app code from github at: https://github.com/rayzor/rv_player/tree/main
@@ -17,6 +21,7 @@ SETUP:
 5. Run and test the app in the Emulator or on your smartphone.
 6. Build the release version. (enter --release in the Edit Configurations : Additional run args)
 7. Create a developer account on Google Play store and on Apple app store.
-8. Deploy the app apk file (build folder) on Google Play store and the ipa file (ios folder) on Apple app store.
+8. Deploy the app apk bundle file (in build folder) on Google Play store and the ipa file (ios folder) on Apple app store.
 
-@Copyrights: see licence for copyright conditions.
+@Copyrights: Coder dojo Club - Glanmire 2023.
+- see licence for copyright conditions.
