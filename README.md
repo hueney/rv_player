@@ -9,9 +9,8 @@ It has the following functionality:-
 - Share button
 
 This App was designed and coded by the members of:
-Coder Dojo Club, Glanmire, Cork, Ireland. Copyright@2023
 
-Privacy Policy site is: https://sites.google.com/view/greenroseapps/home
+Coder Dojo Club, Glanmire, Cork, Ireland. Copyright@2023
 
 SETUP:
 1. Download the app code from github at: https://github.com/rayzor/rv_player/tree/main
