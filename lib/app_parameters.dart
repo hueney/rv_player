@@ -2,7 +2,8 @@
 // Enter your App parameters in this file.
 
 // ToDo : create Enable flags for each element of the app
-// toDo so that they can be switched on or off from this app_parameters file
+// ToDo so that they can be switched on or off from this app_parameters file
+// toDo - not implemented.
 // Set the Enable variables to True for
 // Enable radioPlayer = true
 // Enable videoPlayer = true
@@ -29,7 +30,8 @@ class AppParameters {
       'https://test273864.files.wordpress.com/2024/01/sponsor.jpg';
 
   // 2. SponsorUrl.txt Text file. This contains the sponsor URL to the sponsor website
-  // Sponsor URL file is on Radio Station server. It must be called sponsorURL.txt
+  // Sponsor URL file is on Radio Station server.
+  // ToDo NOTE: It must be called sponsorURL.txt
 
   static const String sponsorTextURL =
       //   'https://raw.githubusercontent.com/rayzor/rv_player/main/sponsorURL.txt'; // Example for test
@@ -49,6 +51,7 @@ class AppParameters {
   static const String radioStationURL = 'http://stream.cr.ie:8002/mp3';
 
   // 5. Radio station Studio video URL Stream is:
+  // ToDo Enter correct video link here
   //static const String studioVideoURL = 'https://www.twitch.tv/corkcitycommunityradio';
 
   // Default video stream for test and demo only.
@@ -62,19 +65,21 @@ class AppParameters {
   // 6. Radio station Brand Icon image in assets folder of the APP.
   static const String radioStationImagePath = 'assets/cccr.jpg';
 
-  // 7. Share Link:
-  // This is the APP link to the Google PlayStore or the Apple App Store. UnREM as required.
+  // 7. Share Links:
+  // These are the APP links to the Google PlayStore and the Apple App Store.
+  // the correct link is selected in code based on Platform info in social_links_widget.dart.
 
   // 7A. Google Play store share link
-  //  ToDo before RELEASE UnREM this and use for Google Play release
-  static const String appShareLink =
-      'https://play.google.com/store/apps/details?id=com.glanmirecoderdojo.rv_player'; // for Google release
+  //  ToDo before RELEASE enter the correct google play store link here
+  static const String googleStoreShareLink =
+      'https://play.google.com/store/apps/details?id=com.glanmirecoderdojo.rv_player';
 
   // 7B. The Apple App store share link
-  // ToDo before RELEASE UnREM this and use for Apple App Store release
-  // static const String appShareLink = 'https://apps.apple.com/ie/app/ryanair/id504270602' // for Apple release
+  // ToDo before RELEASE enter the correct Apple App Store link here
+  static const String appleStoreShareLink =
+      'https://apps.apple.com/ie/app/ryanair/id504270602';
 
-  //test only static const String appShareLink =
+  //test only static const String googleStoreShareLink =
   //  'https://play.google.com/store/apps/details?id=com.neuville.my_radio'; //
 
   static const String emailSubject = 'This is the Cork Community Radio app link';
@@ -82,7 +87,7 @@ class AppParameters {
   // 8. Other Parameters
   static const String developerInfo = "@Coder Dojo Club - Glanmire 2023";
 
-  //======================== code parameters below : Ignore don't change these.
+  //=== code parameters below : Ignore don't change these.
   // App fixed Parameters :Screen Size Adjust parameters etc : Ignore these..
 // ChatGPT code
   static const Color customColor1 = Color.fromRGBO(115, 1, 3, 1.0);

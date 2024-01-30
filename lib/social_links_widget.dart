@@ -1,10 +1,14 @@
 // social_links_widget.dart
 // This file builds the social media icons and urls Row Module
 // It is called from main.dart to build the social media icons row in main.dart
+// not all social media options are enabled. Some Remmed out on request from Owner
 // ChatGPT assisted code. Oct 2023.
+
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,7 +19,8 @@ class SocialMediaLinksRow extends StatelessWidget {
   const SocialMediaLinksRow({Key? key}) : super(key: key);
 
   // the Share link for Google PlayStore or Apple AppStore Link
-  final String appShareLink = AppParameters.appShareLink;
+  final String googleShareLink = AppParameters.googleStoreShareLink;
+  final String appleShareLink = AppParameters.appleStoreShareLink;
   final String subject = AppParameters.emailSubject;
   final Color customColor1 = AppParameters.customColor1;
 
@@ -45,6 +50,7 @@ class SocialMediaLinksRow extends StatelessWidget {
             url: 'http://twitter.com/CorkCity_radio' //'https://twitter.com/',
             ),
 
+        // Temp Omit these social media butttons for this App
         /*
         CircularSocialMediaIcon(
           icon: FontAwesomeIcons.youtube,
@@ -91,27 +97,19 @@ class SocialMediaLinksRow extends StatelessWidget {
     );
   }
 
-  // on_Share called from share button : Ignore PackageInfo plugin library now.
+  // on_Share called from share button :
   _onShare(BuildContext context) async {
-    // ToDo: Note: we use the package info plugin to get the package name and then concantanate into the Google Play store link
-    // This avoids embedding the link in the code. ToDo Apple App Store version?
-    //PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    //String appName = packageInfo.appName;
-    // String packageName = packageInfo.packageName;
-    //String version = packageInfo.version;
-    //String buildNumber = packageInfo.buildNumber;
-    // REM Old code String playStoreLink = 'https://play.google.com/store/apps/details?id=$packageName';
-    // String playStoreLink = appShareLink;
+    // check for OS isAndroid, isIOS , isMac ...etc : to link to correct app store
+    final appURL =
+        (Uri.parse(Platform.isAndroid ? googleShareLink : appleShareLink)).toString();
 
     await Share.share(
-      // playStoreLink,
-      // appShareLink has the Google Play store OR Apple App store link from app_parameters now.
-      appShareLink,
+      appURL, // appShareLink, must convert or cast to string with toString() above
       subject: subject,
       // sharePositionOrigin: box?.localToGlobal(Offset.zero) & box.size
     );
   }
-} // END CLASS
+} // END CLASS - Social Media Row
 
 // This code takes the icon, url link and container color
 // It builds the icons in containers which can be pressed to goto Facebook etc
@@ -123,8 +121,8 @@ class CircularSocialMediaIcon extends StatelessWidget {
   // This code is called the Constructor: It is needed to setup memory for the variables.
   const CircularSocialMediaIcon(
       //{Key? key}) : super(key: key);
-
       {
+    super.key,
     required this.icon,
     required this.url,
     required this.backgroundColor,
@@ -150,7 +148,6 @@ class CircularSocialMediaIcon extends StatelessWidget {
     //final double iconSize = AppParameters.getIconSize(context);
     //final double screenWidth = AppParameters.getScreenWidth(context);
     final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
-    ////////////
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
