@@ -35,8 +35,7 @@ migrate_working_dir/
 pubspec.lock
 .flutter-plugins
 ios/.generated/
-rayReadme
-rayTODO
+
 
 
 # Symbolication related
