@@ -1,3 +1,7 @@
+// radio player widget : radio player functions.
+// iOS: SDK 10.0 or later
+// Android: API Level 23 or later
+
 import 'package:flutter/material.dart';
 import 'package:radio_player/radio_player.dart';
 

@@ -1,5 +1,6 @@
 /*  main.dart : Radio Video Sponsor APP for Community Radio stations
  *  Base Code created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
+ * Uses Expanded widgets and flex: to display each screen widget proportionately for diff screen sizes.
  * Modified by the super Kids of Coder Dojo Club Glanmire, Cork, Ireland  Oct 2023
  * for Cork Community Radio, Ireland
  */
@@ -41,7 +42,7 @@ class RadioTVAppState extends State<RadioTVApp> {
   @override
   void initState() {
     super.initState();
-    //  initRadioPlayer(); // initialise the radio player plugin
+    //  initRadioPlayer(); // initialise the radio player plugin now in radioPlayerWidget
   }
 
 // Build Screen here
@@ -70,29 +71,27 @@ class RadioTVAppState extends State<RadioTVApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+// Radio Player Widget
                   const Expanded(
                     flex: 4, // adjust flex factor as needed
-                    child:
-                        // Radio Player Widget
-                        RadioPlayerWidget(),
+                    child: RadioPlayerWidget(),
                   ),
-// Video Player Container
+// Video Player Widget
                   const Expanded(
                     flex: 7, // adjust flex factor as needed
                     child: VideoPlayerWidget(), // display the Video here
                   ),
                   const SizedBox(height: 10), // 10 pixel separator line
-
-// Sponsor Graphic
+// Sponsor Graphic & link
                   const Expanded(
                     flex: 3, // adjust flex factor as needed
                     child: SponsorGraphicWidget(),
                   ),
-                  // Divider line
 
+                  // Divider line
                   const SizedBox(height: 10),
 
-                  // Social Media Row Icons
+// Social Media Row Icons
                   const Expanded(
                     flex: 1, // adjust flex factor as needed
                     child: SocialMediaLinksRow(),
@@ -121,7 +120,8 @@ class RadioTVAppState extends State<RadioTVApp> {
                       ),
                     ),
                   ),
-///////// original code to display the Album cover graphic and song title from the radio steam... not used in this application.
+//// original plugin code to display the Album cover graphic and song title from the radio steam
+// ... not used in this application.
                   /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
               FutureBuilder(
                 future: _radioPlayer.getArtworkImage(),
@@ -183,6 +183,7 @@ class RadioTVAppState extends State<RadioTVApp> {
   } // end of Build Screen
 } // END of Class
 
-// Ray Neville 2023
+// 2023.
+// Ray Neville
 // Denis O'Mahony
 // Nathan Manley

@@ -1,7 +1,8 @@
 // sponsor_widget.dart :: ChatGPT assisted code. Fix on Stackoverflow
 
 // This code displays the Sponsor Graphic fetched from the Radio station website - sponsor.jpg
-// it also loads the Sponsor text file which contains the Sponsor Website URL sponsorURL.txt
+// it also loads the Sponsor text file from the Radio station website
+// which contains the Sponsor Website URL sponsorURL.txt
 // Users can tap on the Sponsor Graphic and goto the Sponsor Website ... big selling benefit.
 // if there is an error in displaying the Sponsor image load an asset placeholder image
 
@@ -64,9 +65,9 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
         future: getSponsorImage(sizeAdjustFactor),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SizedBox(
-              width: 20.0, // Adjust the width as needed
-              height: 20.0, // Adjust the height as needed
+            // mod to restrict the size of the Circular Progress Indicator 06/02/2024. RN
+            return Transform.scale(
+              scale: 0.5,
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
                     Colors.blue), // Replace with your desired color

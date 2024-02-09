@@ -1,6 +1,6 @@
 // social_links_widget.dart
 // This file builds the social media icons and urls Row Module
-// It is called from main.dart to build the social media icons row in main.dart
+// It is called from main.dart
 // not all social media options are enabled. Some Remmed out on request from Owner
 // ChatGPT assisted code. Oct 2023.
 
@@ -99,14 +99,25 @@ class SocialMediaLinksRow extends StatelessWidget {
 
   // on_Share called from share button :
   _onShare(BuildContext context) async {
+    // iPad needs this
+    final box = context.findRenderObject() as RenderBox?;
+
     // check for OS isAndroid, isIOS , isMac ...etc : to link to correct app store
     final appURL =
         (Uri.parse(Platform.isAndroid ? googleShareLink : appleShareLink)).toString();
 
+    // Share Notes: Exceptions and issues.
+    // The share method also takes an optional subject that will be used when sharing to email.
+    // Share.share('check out my website https://example.com', subject: 'Look what I made!');
+    // Due to restrictions set up by Facebook this plugin isn't capable of sharing data reliably
+    // to Facebook related apps on Android and iOS.
+    // iPad
+    // share_plus requires iPad users to provide the sharePositionOrigin parameter.
+
     await Share.share(
       appURL, // appShareLink, must convert or cast to string with toString() above
       subject: subject,
-      // sharePositionOrigin: box?.localToGlobal(Offset.zero) & box.size
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size, // for iPads
     );
   }
 } // END CLASS - Social Media Row

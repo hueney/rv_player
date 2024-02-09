@@ -1,5 +1,6 @@
 // video_player_widget.dart
 // this file displays the video from the radio studio if streamed.
+// studio URL is defined in the app_parameters file.
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart'; // vid player library by Flutter Team
@@ -18,7 +19,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   // Use AppParameters to access your parameters
   //String studioVideoUrl = 'https://www.twitch.tv/corkcitycommunityradio';
   String studioVideoUrl = AppParameters.studioVideoURL;
-  String videoPlaceholder = AppParameters.videoPlaceholder;
+  String videoPlaceholder = AppParameters.videoPlaceholder; // blank when no video stream
 
   late VideoPlayerController _videoPlayer;
   bool validVideo = false; // first check for validVideo stream : exists and no errors
@@ -95,7 +96,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // if the video is playing then show the video else show placeholder image
+          // if the video is playing then show the video else show placeholder image (use ? : bool test
           _videoPlayer.value.isPlaying
               ? Expanded(
                   //flex: 3,
