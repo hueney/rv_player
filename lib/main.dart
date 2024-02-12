@@ -63,8 +63,15 @@ class RadioTVAppState extends State<RadioTVApp> {
           appBar: null, // nothing in the App Bar
 
           body: Container(
-            decoration: const BoxDecoration(
-              color: customColor1, // fill the screen with Brand color
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  customColor1.withOpacity(0.85), // lighter color at the top
+                  customColor1, // darker color at the bottom (same as before)
+                ],
+              ),
             ),
             child: Center(
               child: Column(
@@ -120,7 +127,7 @@ class RadioTVAppState extends State<RadioTVApp> {
                       ),
                     ),
                   ),
-//// original plugin code to display the Album cover graphic and song title from the radio steam
+//// original plugin code to display the music Album cover graphic and song title from the radio steam
 // ... not used in this application.
                   /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
               FutureBuilder(

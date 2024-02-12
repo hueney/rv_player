@@ -18,31 +18,32 @@ class AppParameters {
 
   // 1. Sponsor Graphic files: sponsor.jpg and sponsorUrl.txt - both on the server.
   // Define the path to the sponsor.jpg file on the Radio station server : Managed by Radio station:
-  // Todo NOTE the sponsor graphic must be called sponsor.jpg
+  // Todo NOTE the sponsor graphic file must be called sponsor.jpg
   // EX: static const String sponsorGraphicURL = 'https://path-to-server/sponsor.jpg
   // A default placeholder is displayed if no sponsor graphic is found on the server
   // This default graphic in in the assets folder.
   // Ex: static const String sponsorGraphicURL = 'https://<path-to-your-server>/sponsor.jpg';
 
+  // This graphic is put on the server at a fixed path and changed for each new sponsor
+  // ToDo NOTE: This file must be called sponsor.jpg
   static const String sponsorGraphicUrl =
-      //  test   'https://cccr2016.files.wordpress.com/2023/02/community-centre-facade-2.jpg?w=2046';
-      //  test   'https://cccr2016.files.wordpress.com/2023/02/sponsor.jpg';
+      // 'https://cccr2016.files.wordpress.com/2023/02/sponsor.jpg';
       'https://test273864.files.wordpress.com/2024/01/sponsor.jpg';
 
-  // 2. SponsorUrl.txt Text file. This contains the sponsor URL to the sponsor website
-  // Sponsor URL file is on Radio Station server.
-  // ToDo NOTE: It must be called sponsorURL.txt
+  // 2. Sponsor.txt file. This contains the sponsor URL to the sponsor website
+  // This file is put on the server at a fixed path and changed for each new sponsor
+  // ToDo NOTE: This file must be called sponsorUrl.txt
 
-  static const String sponsorTextURL =
-      //   'https://raw.githubusercontent.com/rayzor/rv_player/main/sponsorURL.txt'; // Example for test
-      'https://test273864.files.wordpress.com/2024/01/sponsorUrl.txt';
+  static const String sponsorTextURL = // test empty url "";
+      'https://raw.githubusercontent.com/rayzor/rv_player/main/sponsorURL.txt'; // Example for test
+  //'https://test273864.files.wordpress.com/2024/01/sponsorUrl.txt';
 
-  // 2a. Sponsor Placeholder : when no sponsor graphic is available
-  static const String sponsorPlaceholder = 'assets/sponsorPlaceholder.jpg';
+  //2a : Sponsor Web site url DEFAULT. just in case.
+  static const String sponsorWebsiteURL = 'https://www.google.com/'; //'https://cr.ie/';
 
-  //2b : Sponsor Web site url DEFAULT . just in case. use a radio station image from the server.
-  static const String sponsorWebsiteURL =
-      'https://cr.ie/'; // Default jic - belt and braces!
+// 2a. Sponsor Placeholder : when no sponsor graphic is available
+  static const String sponsorPlaceholder =
+      'assets/sponsorPlaceholder.jpg'; // if no remote graphic from server use local in assets
 
 // 3. Radio station Name is:
   static const String radioStationName = 'Cork Community Radio Player';

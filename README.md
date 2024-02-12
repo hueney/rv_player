@@ -20,8 +20,9 @@ SETUP:
 6. Create signing keys for the release version - see Flutter docs.
 7. Build the release version. (enter --release in the Edit Configurations : Additional run args)
 8. Create a developer account on Google Play store and on Apple app store.
-9. Deploy the app apk bundle file (from build folder) on Google Play store 
-   and the ipa file (ios folder) on Apple app store.
+9. Build the app apk bundle file (in build output folder) for Google Play store.
+10. Build the app ipa file (on a Mac with Xcode) for the Apple App store.
+11. Release on the google Play store and Apple App store.
 
 @Copyrights: Coder Dojo Club - Glanmire 2023.
 - BSD 2-Clause License applies.
