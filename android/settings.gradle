@@ -1,3 +1,5 @@
+//ToDo Migrate to applying Gradle plugins with the declarative plugins block: https://flutter.dev/go/flutter-gradle-plugin-apply
+
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()

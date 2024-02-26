@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:rv_player/radio_player_widget.dart';
 import 'package:rv_player/sponsor_widget.dart';
 import 'package:rv_player/video_player_widget.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
 
 import 'app_parameters.dart'; // Import the app_parameters file
 import 'social_links_widget.dart';
@@ -36,6 +37,7 @@ class RadioTVAppState extends State<RadioTVApp> {
   // bool radioIsPlaying = false;
   // final RadioPlayer _radioPlayer = RadioPlayer();
   String developerInfo = AppParameters.developerInfo;
+  final String developerFacebookPage = AppParameters.developerFacebookPage;
 
   List<String>? metadata; // metadata in radio stream contains artist or Album cover image
 
@@ -43,6 +45,15 @@ class RadioTVAppState extends State<RadioTVApp> {
   void initState() {
     super.initState();
     //  initRadioPlayer(); // initialise the radio player plugin now in radioPlayerWidget
+  }
+
+  // Function to launch the URL
+  Future<void> _launchURL(String url) async {
+    if (await canLaunchUrl(url as Uri)) {
+      await launchUrl(url as Uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
 // Build Screen here
@@ -80,18 +91,20 @@ class RadioTVAppState extends State<RadioTVApp> {
                 children: <Widget>[
 // Radio Player Widget
                   const Expanded(
-                    flex: 4, // adjust flex factor as needed
+                    flex: 3, // adjust flex factor as needed
                     child: RadioPlayerWidget(),
                   ),
 // Video Player Widget
                   const Expanded(
-                    flex: 7, // adjust flex factor as needed
-                    child: VideoPlayerWidget(), // display the Video here
+                    flex: 4, // adjust flex factor as needed
+                    //child: VideoPlayerWidget(), // display the Video here
+                    // child: WebView2(), // Replace VideoPlayerWidget with TwitchWebView
+                    child: VideoPlayerWidget(),
                   ),
                   const SizedBox(height: 10), // 10 pixel separator line
 // Sponsor Graphic & link
                   const Expanded(
-                    flex: 3, // adjust flex factor as needed
+                    flex: 4, // adjust flex factor as needed
                     child: SponsorGraphicWidget(),
                   ),
 
@@ -107,26 +120,34 @@ class RadioTVAppState extends State<RadioTVApp> {
                   Expanded(
                     flex: 1, // adjust flex factor as needed
                     child: SizedBox(
-                      width: sizeAdjustFactor, // Adjust the width as needed
-                      height: sizeAdjustFactor / 10, // Adjust the height as needed
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black12, // You can change the background color
-                          borderRadius:
-                              BorderRadius.circular(15.0), // Adjust the radius as needed
-                        ),
-                        child: Center(
-                          child: Text(
-                            developerInfo,
-                            style: const TextStyle(
-                              color: Colors.white, // You can change the text color
-                              fontSize: 8, // You can change the font size
+                        width: sizeAdjustFactor, // Adjust the width as needed
+                        height: sizeAdjustFactor / 10, // Adjust the height as needed
+                        child: GestureDetector(
+                          onTap: () {
+                            // Launch the developer's Facebook page when tapped - ChatGPT code
+                            // ToDo link to Facebook Remmed out Not to be implemented - R.N.
+                            //  launchUrl(Uri.parse(developerFacebookPage));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  Colors.black12, // You can change the background color
+                              borderRadius: BorderRadius.circular(
+                                  15.0), // Adjust the radius as needed
+                            ),
+                            child: Center(
+                              child: Text(
+                                developerInfo,
+                                style: const TextStyle(
+                                  color: Colors.white, // You can change the text color
+                                  fontSize: 8, // You can change the font size
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                   ),
+
 //// original plugin code to display the music Album cover graphic and song title from the radio steam
 // ... not used in this application.
                   /*// === Album Cover Displayed if available in radio stream : Remmed : Not in CCCR Spec
@@ -194,3 +215,4 @@ class RadioTVAppState extends State<RadioTVApp> {
 // Ray Neville
 // Denis O'Mahony
 // Nathan Manley
+// Patrick O'Sullivan

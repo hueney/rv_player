@@ -1,0 +1,13 @@
+Ray ToDo list
+
+//1. ToDo Migrate to applying Gradle plugins with the declarative plugins block:
+https://flutter.dev/go/flutter-gradle-plugin-apply
+
+You are applying Flutter's app_plugin_loader Gradle plugin imperatively
+ using the apply script method, which is deprecated and will be removed in a future release.
+  Migrate to applying Gradle plugins with the declarative plugins block:
+   https://flutter.dev/go/flutter-gradle-plugin-apply
+
+
+//2 ToDo
+    Coder Dojo Dev link... Stop further navigation ..restrict to just Dojo Facebook page.

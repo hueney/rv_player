@@ -15,7 +15,7 @@ import 'package:rv_player/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(RadioTVApp());
+    await tester.pumpWidget(const RadioTVApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

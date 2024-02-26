@@ -78,13 +78,13 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
     // Parameters: This code adjusts the icon/text sizes for different screen sizes, phones , iPads, TVs.
     // It gets the device screen size from MediaQuery in app_parameters.dart file
     // usage of parameters from AppParameters
-    final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
+    //final double sizeAdjustFactor = AppParameters.getSizeAdjustFactor(context);
 
     // print("GET URL VU is ${validSponsorURL} + VG is $validSponsorGraphic");
     // ChatGPT : use Inkwell to wrap the sponsor graphic with onTap method to launch link to the Sponsor website
     return InkWell(
       onTap: () {
-        print(" onTap  VU is ${validSponsorURL} + VG is $validSponsorGraphic");
+        //print( "onTap Valid Url is ${validSponsorURL} + Valid Graphic is $validSponsorGraphic");
         //allow OnTap if we load the Sponsor Image else don't.
         if (validSponsorURL && validSponsorGraphic) {
           launchUrlString(sponsorWebsiteURL);
@@ -100,7 +100,8 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
               validSponsorGraphic = false;
               // Display placeholder image if there's an error or status code is not 200
               return FractionallySizedBox(
-                widthFactor: 0.5,
+                widthFactor: 0.9,
+                heightFactor: 0.9,
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: ClipRRect(
@@ -116,7 +117,7 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
               validSponsorGraphic = true;
               // Display sponsor image if status code is 200
               return FractionallySizedBox(
-                widthFactor: 0.5,
+                widthFactor: 0.9,
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: ClipRRect(
@@ -151,3 +152,4 @@ class SponsorGraphicWidgetState extends State<SponsorGraphicWidget> {
 // Ray Neville 2023
 // Denis O'Mahony
 // Nathan Manley
+// Patrick O'Sullivan

@@ -211,3 +211,4 @@ class CircularSocialMediaIcon extends StatelessWidget {
 // Ray Neville 2023
 // Denis O'Mahony
 // Nathan Manley
+// Patrick O'Sullivan
